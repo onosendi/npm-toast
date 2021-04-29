@@ -117,7 +117,12 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+})({"../node_modules/@onosendi/bemify/build/bemify.js":[function(require,module,exports) {
+var define;
+parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcelRequire,u="function"==typeof require&&require;function f(t,n){if(!r[t]){if(!e[t]){var i="function"==typeof parcelRequire&&parcelRequire;if(!n&&i)return i(t,!0);if(o)return o(t,!0);if(u&&"string"==typeof t)return u(t);var c=new Error("Cannot find module '"+t+"'");throw c.code="MODULE_NOT_FOUND",c}p.resolve=function(r){return e[t][1][r]||r},p.cache={};var l=r[t]=new f.Module(t);e[t][0].call(l.exports,p,l,l.exports,this)}return r[t].exports;function p(e){return f(p.resolve(e))}}f.isParcelRequire=!0,f.Module=function(e){this.id=e,this.bundle=f,this.exports={}},f.modules=e,f.cache=r,f.parent=o,f.register=function(r,t){e[r]=[function(e,r){r.exports=t},{}]};for(var c=0;c<t.length;c++)try{f(t[c])}catch(e){i||(i=e)}if(t.length){var l=f(t[t.length-1]);"object"==typeof exports&&"undefined"!=typeof module?module.exports=l:"function"==typeof define&&define.amd?define(function(){return l}):n&&(this[n]=l)}if(parcelRequire=f,i)throw i;return f}({"Focm":[function(require,module,exports) {
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var e=function(e,t){var r=t.element,o=t.modifier,a=e;return r&&(a+="__".concat(r)),o&&(a+="--".concat(o)),a},t=e;exports.default=t;
+},{}]},{},["Focm"], null)
+},{}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -197,7 +202,23 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.toast = exports.Toast = void 0;
 
+var _bemify = _interopRequireDefault(require("@onosendi/bemify"));
+
 require("./styles.scss");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -209,9 +230,9 @@ var DEFAULT_OPTIONS = {
   delay: 3000,
   dismissible: true,
   dismissText: 'dismiss',
-  position: 'top-center',
-  severity: 'info',
-  useDelay: true
+  newestAtTop: true,
+  position: 'bottom-right',
+  severity: 'info'
 };
 
 var getOptions = function getOptions(defaultOptions, globalOptions, overrideOptions) {
@@ -222,23 +243,93 @@ var getSeverity = function getSeverity(severity, options) {
   return severity || options.severity;
 };
 
+var getPositions = function getPositions(position) {
+  var _position$split = position.split('-'),
+      _position$split2 = _slicedToArray(_position$split, 2),
+      vpos = _position$split2[0],
+      hpos = _position$split2[1];
+
+  return {
+    vpos: vpos,
+    hpos: hpos
+  };
+};
+
+var clsJoin = function clsJoin(classList) {
+  return classList.join(' ');
+};
+
+var createList = function createList(_ref, className) {
+  var position = _ref.position;
+
+  var _getPositions = getPositions(position),
+      vpos = _getPositions.vpos,
+      hpos = _getPositions.hpos;
+
+  var ul = document.createElement('ul');
+  ul.className = clsJoin([className, (0, _bemify.default)(className, {
+    modifier: "vpos-".concat(vpos)
+  }), (0, _bemify.default)(className, {
+    modifier: "hpos-".concat(hpos)
+  })]);
+  return ul;
+};
+
+var createListItem = function createListItem(message, severity, className) {
+  var li = document.createElement('li');
+  var text = document.createTextNode(message);
+  li.className = clsJoin([(0, _bemify.default)(className, {
+    element: 'item'
+  }), (0, _bemify.default)(className, {
+    element: 'item',
+    modifier: severity
+  })]);
+  li.append(text);
+  return li;
+};
+
+var renderListItem = function renderListItem(list, listItem, options) {
+  var newestAtTop = options.newestAtTop,
+      position = options.position;
+
+  var _getPositions2 = getPositions(position),
+      vpos = _getPositions2.vpos;
+
+  var before = vpos === 'top' ? newestAtTop : !newestAtTop;
+
+  if (before) {
+    list.insertBefore(listItem, list.childNodes[0]);
+  } else {
+    list.appendChild(listItem);
+  }
+};
+
 var Toast = function Toast() {
   var globalOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  return function (_ref) {
-    var message = _ref.message,
-        toastSeverity = _ref.severity,
-        _ref$options = _ref.options,
-        overrideOptions = _ref$options === void 0 ? {} : _ref$options;
+  return function (_ref2) {
+    var message = _ref2.message,
+        toastSeverity = _ref2.severity,
+        _ref2$options = _ref2.options,
+        overrideOptions = _ref2$options === void 0 ? {} : _ref2$options;
     var options = getOptions(DEFAULT_OPTIONS, globalOptions, overrideOptions);
     var severity = getSeverity(toastSeverity, options);
-    console.log(message, severity);
+    var className = 'c-toast';
+    var list = document.querySelector(".".concat(className));
+
+    if (!list) {
+      list = createList(options, className);
+      document.body.appendChild(list);
+    }
+
+    var listItem = createListItem(message, severity, className);
+    renderListItem(list, listItem, options);
   };
 };
 
 exports.Toast = Toast;
 var toast = Toast();
 exports.toast = toast;
-},{"./styles.scss":"styles.scss"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"@onosendi/bemify":"../node_modules/@onosendi/bemify/build/bemify.js","./styles.scss":"styles.scss"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -266,7 +357,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41391" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43385" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
