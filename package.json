@@ -4,16 +4,20 @@
   "description": "Toast notifications",
   "main": "build/toast.js",
   "scripts": {
-    "build": "parcel build src/index.js --out-dir build --out-file toast --no-source-maps",
-    "start": "parcel src/index.js --out-dir build --out-file toast"
+    "build": "npm run build:js && npm run build:sass",
+    "build:js": "babel src --out-dir build",
+    "build:sass": "sass src/styles.scss build/toast.css --no-source-map",
+    "prepare": "npm run build",
+    "start": "parcel src/toast.js --out-dir build --out-file toast"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/onosendi/npm-toast.git"
   },
   "keywords": [
-    "toast",
-    "snackbar"
+    "notifications",
+    "snackbar",
+    "toast"
   ],
   "author": "Daniel Lindegren (onosendi)",
   "license": "MIT",
@@ -22,6 +26,9 @@
   },
   "homepage": "https://github.com/onosendi/npm-toast#readme",
   "devDependencies": {
+    "@babel/cli": "^7.13.16",
+    "@babel/core": "^7.13.16",
+    "@babel/preset-env": "^7.13.15",
     "eslint": "^7.25.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
@@ -30,6 +37,6 @@
     "sass": "^1.32.11"
   },
   "dependencies": {
-    "@onosendi/bemify": "^0.1.0"
+    "@onosendi/bemify": "^0.1.1"
   }
 }

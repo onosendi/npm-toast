@@ -1,5 +1,4 @@
 import bemify from '@onosendi/bemify';
-import './styles.scss';
 
 const DEFAULT_OPTIONS = {
   delay: 3000,
