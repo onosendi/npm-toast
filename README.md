@@ -12,7 +12,7 @@ CSS file is located at `@onosendi/toast/build/toast.css`
 
 ## Usage
 
-Instantiate with default options.
+Instantiate with default options:
 
 ```javascript
 import { Toast } from '@onosendi/toast';
