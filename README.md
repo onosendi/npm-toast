@@ -18,7 +18,7 @@ Instantiate with default options.
 
     const toast = Toast({
       // Delay in miliseconds. Set to 0 for non disappearing notifications.
-      delay: 2000,
+      delay: 3000,
 
       // Show dismiss button.
       dismissible: true,
