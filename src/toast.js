@@ -22,6 +22,14 @@ const getPositions = (position) => {
   return { vpos, hpos };
 };
 
+const removeListItem = (list, listItem) => {
+  listItem.remove();
+  const listItems = list.querySelector('li');
+  if (!listItems) {
+    list.remove();
+  }
+};
+
 const createList = (options, className) => {
   let ul = document.querySelector(`.${className}`);
   if (!ul) {
@@ -32,11 +40,23 @@ const createList = (options, className) => {
   return ul;
 };
 
-const createListItem = (message, severity, className) => {
+const createListItem = (message, severity, list, options, className) => {
   const li = document.createElement('li');
-  const text = document.createTextNode(message);
+  const liText = document.createTextNode(message);
   li.className = bemify(className, ['__item', `--${severity}`]);
-  li.append(text);
+  li.append(liText);
+
+  const { dismissible, dismissText } = options;
+  if (dismissible) {
+    const span = document.createElement('span');
+    span.className = bemify(className, '__dismiss');
+    const spanText = document.createTextNode(dismissText);
+    span.append(spanText);
+    li.appendChild(span);
+    li.addEventListener('click', () => {
+      removeListItem(list, li);
+    });
+  }
   return li;
 };
 
@@ -48,6 +68,15 @@ const renderListItem = (list, listItem, options) => {
     list.insertBefore(listItem, list.childNodes[0]);
   } else {
     list.appendChild(listItem);
+  }
+};
+
+const manageDelay = (list, listItem, options) => {
+  const { delay } = options;
+  if (delay > 0) {
+    setTimeout(() => {
+      removeListItem(list, listItem);
+    }, delay);
   }
 };
 
@@ -63,12 +92,11 @@ export const Toast = (globalOptions = {}) => ({
 
   const list = createList(options, className);
   document.body.appendChild(list);
-  const listItem = createListItem(message, severity, className);
+
+  const listItem = createListItem(message, severity, list, options, className);
   renderListItem(list, listItem, options);
 
-  setTimeout(() => {
-    listItem.remove();
-  }, 3000);
+  manageDelay(list, listItem, options);
 };
 
 export const toast = Toast();
