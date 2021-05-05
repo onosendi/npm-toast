@@ -1,4 +1,4 @@
-import bemify from '@onosendi/bemify';
+import bemify from 'bemify-js';
 
 const DEFAULT_OPTIONS = {
   delay: 3000,
@@ -22,26 +22,17 @@ const getPositions = (position) => {
   return { vpos, hpos };
 };
 
-const clsJoin = (classList) => classList.join(' ');
-
 const createList = ({ position }, className) => {
   const { vpos, hpos } = getPositions(position);
   const ul = document.createElement('ul');
-  ul.className = clsJoin([
-    className,
-    bemify(className, { modifier: `vpos-${vpos}` }),
-    bemify(className, { modifier: `hpos-${hpos}` }),
-  ]);
+  ul.className = bemify(className, [`--vpos-${vpos}`, `--hpos-${hpos}`]);
   return ul;
 };
 
 const createListItem = (message, severity, className) => {
   const li = document.createElement('li');
   const text = document.createTextNode(message);
-  li.className = clsJoin([
-    bemify(className, { element: 'item' }),
-    bemify(className, { element: 'item', modifier: severity }),
-  ]);
+  li.className = bemify(className, ['__item', `--${severity}`]);
   li.append(text);
   return li;
 };
@@ -49,7 +40,7 @@ const createListItem = (message, severity, className) => {
 const renderListItem = (list, listItem, options) => {
   const { newestAtTop, position } = options;
   const { vpos } = getPositions(position);
-  const before = vpos === 'top' ? newestAtTop : !newestAtTop;
+  const before = ['top', 'center'].includes(vpos) ? newestAtTop : !newestAtTop;
   if (before) {
     list.insertBefore(listItem, list.childNodes[0]);
   } else {
