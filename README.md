@@ -56,3 +56,11 @@ Without default options:
       message: 'Message with "warning" severity',
       severity: 'warning',
     });
+
+    toast({
+      message: 'Message with "success" severity',
+      severity: 'success',
+      options: {
+        delay: 1000,
+      },
+    });
