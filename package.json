@@ -1,14 +1,13 @@
 {
   "name": "@onosendi/toast",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "Toast notifications",
   "main": "build/toast.js",
   "scripts": {
     "build": "npm run build:js && npm run build:sass",
     "build:js": "babel src --out-dir build",
     "build:sass": "sass src/styles.scss build/toast.css --no-source-map",
-    "prepare": "npm run build",
-    "start": "parcel src/toast.js --out-dir build --out-file toast"
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
