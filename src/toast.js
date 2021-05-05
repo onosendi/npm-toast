@@ -22,10 +22,13 @@ const getPositions = (position) => {
   return { vpos, hpos };
 };
 
-const createList = ({ position }, className) => {
-  const { vpos, hpos } = getPositions(position);
-  const ul = document.createElement('ul');
-  ul.className = bemify(className, [`--vpos-${vpos}`, `--hpos-${hpos}`]);
+const createList = (options, className) => {
+  let ul = document.querySelector(`.${className}`);
+  if (!ul) {
+    ul = document.createElement('ul');
+    const { vpos, hpos } = getPositions(options.position);
+    ul.className = bemify(className, [`--vpos-${vpos}`, `--hpos-${hpos}`]);
+  }
   return ul;
 };
 
@@ -58,13 +61,14 @@ export const Toast = (globalOptions = {}) => ({
 
   const className = 'c-toast';
 
-  let list = document.querySelector(`.${className}`);
-  if (!list) {
-    list = createList(options, className);
-    document.body.appendChild(list);
-  }
+  const list = createList(options, className);
+  document.body.appendChild(list);
   const listItem = createListItem(message, severity, className);
   renderListItem(list, listItem, options);
+
+  setTimeout(() => {
+    listItem.remove();
+  }, 3000);
 };
 
 export const toast = Toast();
