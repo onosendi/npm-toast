@@ -95,10 +95,15 @@
   }
 
   &__dismiss {
+    background-color: transparent;
+    border: none;
     color: var(--clr-white);
     cursor: pointer;
     display: inline-block;
+    font: inherit;
+    line-height: inherit;
     margin-left: var(--item-hpadding);
+    padding: 0;
 
     &:hover {
       color: var(--severity);

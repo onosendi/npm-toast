@@ -48,14 +48,15 @@ const createListItem = (message, severity, list, options, className) => {
 
   const { dismissible, dismissText } = options;
   if (dismissible) {
-    const span = document.createElement('span');
-    span.className = bemify(className, '__dismiss');
-    const spanText = document.createTextNode(dismissText);
-    span.append(spanText);
-    li.appendChild(span);
-    li.addEventListener('click', () => {
+    const button = document.createElement('button');
+    button.className = bemify(className, '__dismiss');
+    button.setAttribute('type', 'button');
+    const buttonText = document.createTextNode(dismissText);
+    button.append(buttonText);
+    button.addEventListener('click', () => {
       removeListItem(list, li);
     });
+    li.appendChild(button);
   }
   return li;
 };
