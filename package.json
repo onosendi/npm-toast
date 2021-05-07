@@ -4,10 +4,13 @@
   "description": "Toast notifications",
   "main": "build/toast.js",
   "scripts": {
-    "build": "npm run build:js && npm run build:sass",
+    "build": "npm-run-all -l build:*",
     "build:js": "babel src --out-dir build",
     "build:sass": "sass src/styles.scss build/toast.css --no-source-map",
-    "prepare": "npm run build"
+    "dev:js": "babel --watch src --out-dir build",
+    "dev:sass": "sass --watch src/styles.scss build/toast.css",
+    "prepare": "npm run build",
+    "start": "npm-run-all -l -p dev:*"
   },
   "repository": {
     "type": "git",
@@ -31,8 +34,7 @@
     "eslint": "^7.25.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
-    "parcel-bundler": "^1.12.5",
-    "parcel-plugin-clean-dist": "^0.0.6",
+    "npm-run-all": "^4.1.5",
     "sass": "^1.32.11"
   },
   "dependencies": {
