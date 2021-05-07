@@ -4,6 +4,7 @@ const DEFAULT_OPTIONS = {
   delay: 3000,
   dismissible: true,
   dismissText: 'dismiss',
+  maxWidth: '100%',
   newestAtTop: true,
   position: 'bottom-right',
   severity: 'info',
@@ -21,6 +22,8 @@ const getPositions = (position) => {
   const [vpos, hpos] = position.split('-');
   return { vpos, hpos };
 };
+
+const normalizeMaxWidth = (arg) => (typeof arg === 'number' ? `${arg}px` : arg);
 
 const removeListItem = (list, listItem) => {
   listItem.remove();
@@ -41,12 +44,18 @@ const createList = (options, className) => {
 };
 
 const createListItem = (message, severity, list, options, className) => {
-  const li = document.createElement('li');
-  const liText = document.createTextNode(message);
-  li.className = bemify(className, ['__item', `--${severity}`]);
-  li.append(liText);
+  const { dismissible, dismissText, maxWidth } = options;
 
-  const { dismissible, dismissText } = options;
+  const li = document.createElement('li');
+  li.className = bemify(className, ['__item', `--${severity}`]);
+  li.style.maxWidth = normalizeMaxWidth(maxWidth);
+
+  const div = document.createElement('div');
+  const text = document.createTextNode(message);
+  div.append(text);
+
+  li.append(div);
+
   if (dismissible) {
     const button = document.createElement('button');
     button.className = bemify(className, '__dismiss');

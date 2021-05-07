@@ -27,6 +27,9 @@ const toast = Toast({
   // Dismiss button text.
   dismissText: 'dismiss',
 
+  // Maximum width the notifications should be displayed.
+  maxWidth: '100%',
+
   // Place new notifications at the top. Note: if notifications are
   // vertically aligned to the bottom, new notifications will be
   // placed at the bottom.
