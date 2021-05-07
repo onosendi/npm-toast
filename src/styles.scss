@@ -1,11 +1,11 @@
 .c-toast {
-  --clr-black: #000;
-  --clr-item-bg: #2b2b2b;
-  --clr-error: #f44034;
-  --clr-info: #3675b5;
-  --clr-success: #4eb17e;
-  --clr-warning: #cda247;
-  --clr-white: #fff;
+  --clr-black: hsl(0, 0%, 0%);
+  --clr-item-bg: hsl(0, 0%, 17%);
+  --clr-error: hsl(4, 90%, 58%);
+  --clr-info: hsl(210, 54%, 46%);
+  --clr-success: hsl(149, 39%, 50%);
+  --clr-warning: hsl(41, 57%, 54%);
+  --clr-white: hsl(0, 0%, 100%);
   --hpos: center;
   --vpos: flex-start;
   --item-spacing: 10px;
